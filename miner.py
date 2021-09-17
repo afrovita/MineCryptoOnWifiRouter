@@ -39,7 +39,7 @@ def retrieve_server_ip():
         except:
             print("> Failed to retrieve Pool Address and Port, Retrying.")
             continue
-if !pool_obtained:
+if not pool_obtained:
     retrieve_server_ip()
 while True:
     try:
@@ -132,7 +132,7 @@ while True:
 
     except Exception as e:
         print("Error occured: " + str(e) + ", restarting in 1s.")
-        if !pool_obtained:
+        if not pool_obtained:
             retrieve_server_ip()
         time.sleep(1)
         os.execl(sys.executable, sys.executable, *sys.argv)
