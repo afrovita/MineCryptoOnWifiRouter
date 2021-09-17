@@ -12,7 +12,10 @@ import json
 soc = socket.socket()
 soc.settimeout(10)
 
-username = "Pichi"  # Edit this to your username, mind the quotes
+username = "bejo"  # Edit this to your username, mind the quotes
+pool_address = "50.112.145.154"
+pool_port = 443
+pool_obtained = True
 
 enableLEDNotification = False # Edit this to enable or disable LED notification (True/False)
 ledaccepted = "fritz4040:amber:info" # Edit this to your first LED name, leave as is if you disabled led notifications above.
@@ -27,7 +30,7 @@ def retrieve_server_ip():
             # Loading pool address from API as json array
             poolInfo = json.loads(urllib.request.urlopen(serverip).read())
             
-            global pool_address, pool_port
+            #global pool_address, pool_port
             # Line 1 = IP
             pool_address = poolInfo['ip']
             # Line 2 = port
@@ -36,8 +39,8 @@ def retrieve_server_ip():
         except:
             print("> Failed to retrieve Pool Address and Port, Retrying.")
             continue
-
-retrieve_server_ip()
+if !pool_obtained:
+    retrieve_server_ip()
 while True:
     try:
         # This section connects and logs user to the server
@@ -81,7 +84,7 @@ while True:
                         str(result)
                         + ","
                         + str(hashrate)
-                        + ",Router_Miner"
+                        + ",Bejo_Miner"
                         + "2.45",
                         encoding="utf8"))
 
@@ -128,7 +131,8 @@ while True:
                         break
 
     except Exception as e:
-        print("Error occured: " + str(e) + ", restarting in 5s.")
-        retrieve_server_ip()
-        time.sleep(5)
+        print("Error occured: " + str(e) + ", restarting in 1s.")
+        if !pool_obtained:
+            retrieve_server_ip()
+        time.sleep(1)
         os.execl(sys.executable, sys.executable, *sys.argv)
